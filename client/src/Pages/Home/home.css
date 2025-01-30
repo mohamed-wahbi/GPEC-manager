@@ -9,6 +9,11 @@
     padding: 15px;
     background-image: linear-gradient(45deg, #ededed, transparent);
   }
+
+  .homeComp .link {
+    text-decoration: none;
+    color: white;
+  }
   
   .logoImg {
     width: 220px;

@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Home from './Pages/Home/Home'
+import Register from './Pages/Register/Register'
 
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/register' element={<Register />} />
          
         </Routes>
       </BrowserRouter>
