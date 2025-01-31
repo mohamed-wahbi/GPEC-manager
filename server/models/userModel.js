@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         minlength: 8
     },
     numTel: {
-        type: String, // Changer en String pour éviter les erreurs avec les nombres
+        type: String, // Correction : String pour éviter les erreurs avec les numéros
         trim: true,
         match: /^[0-9]{8}$/, // Assure que c'est un numéro de 8 chiffres
         default: null
@@ -51,7 +51,7 @@ function registerVerify(obj) {
         username: Joi.string().trim().min(2).max(100).required(),
         email: Joi.string().trim().min(5).max(100).required().email(),
         password: Joi.string().trim().min(8).required(),
-        numTel: Joi.string().trim().length(8).pattern(/^[0-9]{8}$/).allow(null, ""), // Permet null ou vide
+        numTel: Joi.string().pattern(/^[0-9]{8}$/).allow(null, ""), // Correction pour accepter null ou vide
         poste: Joi.string().valid("employé", "chef de département", "administrateur").default("employé")
     });
     return schema.validate(obj);
