@@ -7,6 +7,7 @@ require("./config/connect")
 require('dotenv').config()
 
 const authRoutes = require('./routes/authRoute.js');
+const confirmeUserRoutes = require('./routes/confirmedUserRoute.js');
 
 
 
@@ -18,6 +19,7 @@ app.use(cors());
 
 // routes : 
 app.use('/api/auth',authRoutes);
+app.use('/api/user',confirmeUserRoutes);
 
 
 const PORT = process.env.PORT 
