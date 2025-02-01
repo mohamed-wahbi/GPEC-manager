@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { User, registerVerify } = require("../models/userModel.js");
+const { User, registerVerify , loginVerify} = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -40,5 +40,51 @@ module.exports.registerCtel = asyncHandler(async (req, res) => {
 });
 
 
+
+/*--------------------------------------------------
+* @desc    Login new User
+* @router  /api/auth/login
+* @methode POST
+* @access  public
+----------------------------------------------------*/
+module.exports.loginCtrl = asyncHandler(async (req, res) => {
+  // Validation
+  const { error } = loginVerify(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
+  // Find user by email
+  const findEmailUser = await User.findOne({ email: req.body.email });
+  if (!findEmailUser) {
+    return res.status(400).json({ message: 'Email or password is invalid' });
+  }
+
+  // Password compare
+  const passwordCompare = await bcrypt.compare(req.body.password, findEmailUser.password);
+  if (!passwordCompare) {
+    return res.status(400).json({ message: 'Email or password is invalid' });
+  }
+
+  const token = jwt.sign(
+    { id: findEmailUser._id, name: findEmailUser.username, poste: findEmailUser.poste },
+    'wahbiDevCode',
+    { expiresIn: '1h' }
+  );
+
+ 
+
+  res.status(200).json({
+    _id: findEmailUser._id,
+    name: findEmailUser.username,
+    token
+  });
+
+
+
+
+
+  
+});
 
 
