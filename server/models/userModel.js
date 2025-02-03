@@ -9,6 +9,14 @@ const userSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 100
     },
+    birthDate: {
+        type:String,
+        default:"14/02/2025"
+    },
+    numTel:{
+        type:Number,
+        default:null
+    },
     email: {
         type: String,
         required: true,
@@ -49,6 +57,7 @@ const User = mongoose.model('User', userSchema);
 function registerVerify(obj) {
     const schema = Joi.object({
         username: Joi.string().trim().min(2).max(100).required(),
+        birthDate: Joi.string(),
         email: Joi.string().trim().min(5).max(100).required().email(),
         password: Joi.string().trim().min(8).required(),
         numTel: Joi.string().pattern(/^[0-9]{8}$/).allow(null, ""), // Correction pour accepter null ou vide
